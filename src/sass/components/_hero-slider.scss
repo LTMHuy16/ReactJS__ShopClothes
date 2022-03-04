@@ -1,0 +1,199 @@
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  max-height: 1080px;
+  margin-bottom: 50px;
+  margin-top: $header-height;
+
+  @include tablet {
+    margin-top: $header-tablet-height;
+  }
+
+  @include mobile {
+    margin-top: $header-mobile-height;
+  }
+
+  &__item {
+    position: absolute;
+    @include flex(center, space-between);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    inset: 0;
+
+    @include tablet {
+      flex-direction: column-reverse;
+      padding-top: $header-tablet-height;
+    }
+
+    @include mobile {
+      flex-direction: column-reverse;
+      padding-top: unset;
+      padding-bottom: 40px;
+    }
+
+    // Start Transform Slider
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: visible;
+
+      .hero-slider__item {
+
+        &__title > h4,
+        &__description > p,
+        &__btn > button,
+        &__image > img {
+
+          transform: translate(0, 0);
+        }
+      }
+    }
+
+    &__title > h4,
+    &__description > p,
+    &__btn > button {
+      display: block;
+      transform: translateY(-100%);
+      transition: transform .5s ease-in-out;
+    }
+
+    &__image > img {
+      transform: translateX(100%);
+      transition: transform .5s ease-in-out;
+    }
+    // End Transform Slider
+
+
+
+
+    &__info {
+      width: 60%;
+
+      @include tablet {
+        width: unset;
+      }
+    }
+
+    &__title,
+    &__description {
+      margin-bottom: 60px;
+
+      @include tablet {
+        margin-bottom: 15px;
+      }
+    }
+
+    &__title {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-weight: 600;
+      font-size: 4.5rem;
+      line-height: 6.7rem;
+      overflow: hidden;
+
+      @include mobile {
+        font-size: 2.5rem;
+        line-height: 3rem;
+        overflow: hidden;
+      }
+    }
+
+    &__description {
+      color: $txt-second-color;
+      font-size: 1.5rem;
+      line-height: 2.25rem;
+      overflow: hidden;
+
+      @include mobile {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+    }
+
+    &__image {
+      flex-grow: 1;
+      position: relative;
+      height: 100%;
+      z-index: 99;
+      pointer-events: none;
+
+      @include tablet {
+        width: 100%;
+        height: 65%;
+        @include flex(center, center);
+        flex-grow: unset;
+      }
+
+      &-shape {
+        $size: 472px;
+        height: $size;
+        width: $size;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        z-index: -1;
+        transform: translate(0, -50%);
+        border-radius: 54% 46% 89% 11% / 38% 26% 74% 62%;
+        transition: border-radius 13s ease-in-out;
+        animation: border 10s infinite alternate;
+
+        @include tablet {
+          $size: 250px;
+          height: $size;
+          width: $size;
+          right: 50%;
+          transform: translate(50%, -50%);
+        }
+      }
+
+      img {
+        height: 100vh;
+
+        @include tablet {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  &__control {
+    @include flex (center, center);
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @include tablet {
+      bottom: 0;
+    }
+
+    &__item {
+      @include flex (center, center);
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.4rem;
+      
+      &:hover {
+        color: $main-color;
+      }
+
+      .index {
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes border {
+  0% {
+    border-radius: 54% 46% 89% 11% / 38% 26% 74% 62%;
+  }
+  50% {
+    border-radius: 72% 28% 43% 57% / 57% 37% 63% 43%;
+  }
+  100% {
+    border-radius: 51% 49% 23% 77% / 20% 24% 76% 80%;
+  }
+}
