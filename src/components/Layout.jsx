@@ -3,6 +3,7 @@ import RoutesContent from "../routes/Routes";
 
 import Footer from "./Footer";
 import Header from "./Header";
+import ProductViewModal from './ProductViewModal'
 
 const LayoutDetail = () => {
   return (
@@ -14,6 +15,7 @@ const LayoutDetail = () => {
         </div>
       </div>
       <Footer />
+      <ProductViewModal />
     </div>
   );
 };

@@ -3,12 +3,24 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 import numberWithCommas from "../utils/NumberWithComma";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItems } from "../redux/shopping-cart/cartItemSlice";
 
 const ProductView = ({ product }) => {
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate()
+  if (product === undefined) {
+    product = {
+      title: "",
+      price: "",
+      colors: [],
+      size: [],
+    };
+  }
 
-  const [previewImg, setPreviewImg] = useState(product.image01);;
+  const navigate = useNavigate();
+
+  const [previewImg, setPreviewImg] = useState(product.image01);
 
   const [isExpandDes, setIsExpandDes] = useState(false);
 
@@ -16,49 +28,66 @@ const ProductView = ({ product }) => {
 
   const [size, setSize] = useState(undefined);
 
-  const [quality, setQuality] = useState(1)
+  const [quality, setQuality] = useState(1);
 
   const updateQuality = (type) => {
-    if (type === 'plus') {
-      setQuality(preQuality => preQuality + 1)
+    if (type === "plus") {
+      setQuality((preQuality) => preQuality + 1);
+    } else {
+      setQuality(quality - 1 < 1 ? 1 : quality - 1);
     }
-    else {
-      setQuality(quality - 1 < 1 ? 1 : quality - 1)
-    }
-  }
+  };
 
   useEffect(() => {
     setPreviewImg(product.image01);
-    setQuality(1)
-    setColor(undefined)
-    setSize(undefined)
-  }, [product])
+    setQuality(1);
+    setColor(undefined);
+    setSize(undefined);
+  }, [product]);
 
   const check = () => {
     if (color === undefined) {
-      alert("Vui lòng chọn màu mong muốn !!!")
-      return false
+      alert("Vui lòng chọn màu mong muốn !!!");
+      return false;
     }
 
     if (size === undefined) {
-      alert("Vui lòng chọn kích cỡ mong muốn !!!")
-      return false
+      alert("Vui lòng chọn kích cỡ mong muốn !!!");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const addToCart = () => {
     if (check()) {
-      console.log(color, size, quality)
+      dispatch(
+        addItems({
+          slug: product.slug,
+          color: color,
+          size: size,
+          quantity: quality,
+          price: product.price,
+        })
+      );
     }
-  }
+    alert('Add Product Success !!!')
+  };
 
   const goToCart = () => {
     if (check()) {
-      navigate('/cart')
+      dispatch(
+        addItems({
+          slug: product.slug,
+          color: color,
+          size: size,
+          quantity: quality,
+          price: product.price,
+        })
+      );
+      navigate("/cart");
     }
-  }
+  };
 
   return (
     <div className="product">
@@ -139,42 +168,52 @@ const ProductView = ({ product }) => {
         <div className="product__info__item">
           <h4 className="product__info__item__title">Số lượng</h4>
           <div className="product__info__item__quality">
-            <div className="product__info__item__quality__btn" onClick={() => updateQuality("minus")}>
-              <box-icon name='minus'></box-icon>
+            <div
+              className="product__info__item__quality__btn"
+              onClick={() => updateQuality("minus")}
+            >
+              <box-icon name="minus"></box-icon>
             </div>
-            <div className="product__info__item__quality__input">
-              {quality}
-            </div>
-            <div className="product__info__item__quality__btn" onClick={() => updateQuality("plus")}>
-              <box-icon name='plus'></box-icon>
+            <div className="product__info__item__quality__input">{quality}</div>
+            <div
+              className="product__info__item__quality__btn"
+              onClick={() => updateQuality("plus")}
+            >
+              <box-icon name="plus"></box-icon>
             </div>
           </div>
         </div>
         <div className="product__info__item">
           <div className="product__info__item__btns">
-            <Button size="sm" onclick={() => addToCart()}>Thêm vào giỏ</Button>
-            <Button size="sm" onclick={() => goToCart()}>Mua ngay</Button>
-          </div>
-        </div>
-      </div>
-      <div className={`product__description mobile ${isExpandDes ? "expand" : ""}`}>
-          <h4 className="product__description__title">Chi tiết sản phẩm</h4>
-          <p
-            className="product__description__content"
-            dangerouslySetInnerHTML={{ __html: product.description }}
-          ></p>
-          <div className="product__description__toggle">
-            <Button size="sm" onclick={() => setIsExpandDes(!isExpandDes)}>
-              {isExpandDes ? "Thu gọn" : "Xem thêm"}
+            <Button size="sm" onclick={() => addToCart()}>
+              Thêm vào giỏ
+            </Button>
+            <Button size="sm" onclick={() => goToCart()}>
+              Mua ngay
             </Button>
           </div>
         </div>
+      </div>
+      <div
+        className={`product__description mobile ${isExpandDes ? "expand" : ""}`}
+      >
+        <h4 className="product__description__title">Chi tiết sản phẩm</h4>
+        <p
+          className="product__description__content"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        ></p>
+        <div className="product__description__toggle">
+          <Button size="sm" onclick={() => setIsExpandDes(!isExpandDes)}>
+            {isExpandDes ? "Thu gọn" : "Xem thêm"}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
 
 ProductView.propTypes = {
-  product: PropTypes.object.isRequired,
+  product: PropTypes.object,
 };
 
 export default ProductView;
