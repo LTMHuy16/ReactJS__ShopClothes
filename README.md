@@ -6,10 +6,10 @@
 
   # Preview
 
-  ![img](https://github.com/LTMHuy16/ReactJS__ShopClothes/blob/master/preview/.png)
+  ![img1](https://github.com/LTMHuy16/ReactJS__ShopClothes/tree/master/src/previewImg/1.png)
 
-   ![img2](https://github.com/LTMHuy16/ReactJS__ShopClothes/blob/master/preview/2.png)
+   ![img2](https://github.com/LTMHuy16/ReactJS__ShopClothes/tree/master/src/previewImg/2.png)
 
-  ![img3](https://github.com/LTMHuy16/ReactJS__ShopClothes/blob/master/preview/3.png)
+  ![img3](https://github.com/LTMHuy16/ReactJS__ShopClothes/tree/master/src/previewImg/3.png)
 
-  ![img4](https://github.com/LTMHuy16/ReactJS__ShopClothes/blob/master/preview/4.png)
+  ![img4](https://github.com/LTMHuy16/ReactJS__ShopClothes/tree/master/src/previewImg/4.png)
